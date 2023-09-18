@@ -1,0 +1,13 @@
+[WARN] E011: Failed to run a simple example test
+Diffblue Cover tried to run a simple example test to help it identify the
+right project configuration, but the test failed to execute when running
+Gradle.
+[WARN] E109: Max heap size too low
+Diffblue Cover recommends 4096 MB of memory allocated but
+detected only 1024 MB.
+Please use the JVM_ARGS environment variable to increase the
+maximum memory allocated:
+JVM_ARGS=-Xmx4096m
+[WARN] Max heap size                 1024 MB                       WARNING        
+[WARN] Test execution                                              WARNING        
+[WARN] Environment check status: WARNING

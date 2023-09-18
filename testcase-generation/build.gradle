@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    // Workaround needed for Eclipse, probably because of https://github.com/gradle/gradle/issues/16922
+    // Should be removed as soon as Gradle 7.0.1 is released ( https://github.com/gradle/gradle/issues/16922#issuecomment-828217060 )
+    modularity.inferModulePath.set(false)
+
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(20)
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src"]
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'org.apache.commons:commons-csv:1.9.0'
+}
+
+tasks.register('generateTestcases', JavaExec) {
+    group = 'test generator'
+
+    mainClass = 'generator.TestCaseGenerator'
+    classpath = sourceSets.main.runtimeClasspath
+
+    args = ['generate']
+}
+
+tasks.register('cleanTestcases', JavaExec) {
+    group = 'test generator'
+
+    mainClass = 'generator.TestCaseGenerator'
+    classpath = sourceSets.main.runtimeClasspath
+
+    args = ['clean']
+}
+
+tasks.getByName("jar").setProperty("duplicatesStrategy", DuplicatesStrategy.EXCLUDE);

@@ -1,0 +1,24 @@
+[ERROR] E052: Missing dependency
+Required dependencies were not found.
+Please add the following dependencies to your project:
+  testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+[WARN] E052: Missing dependency
+Unable to mock method inputs because a supported version of Mockito is not present on the classpath.
+Required dependencies were not found.
+Please add the following dependencies to your project:
+  testImplementation("org.mockito:mockito-core:5.4.0")
+[WARN] E109: Max heap size too low
+Diffblue Cover recommends 4096 MB of memory allocated but
+detected only 1024 MB.
+Please use the JVM_ARGS environment variable to increase the
+maximum memory allocated:
+JVM_ARGS=-Xmx4096m
+[ERROR] E004: No methods found to test
+Please ensure the project has been built, that any specified entry points
+exist, and that the patch (if given) is valid.
+See https://diff.blue/E004 to resolve this issue.
+[WARN] Mocking Framework                                           WARNING        
+[ERROR] Testing framework                                           ERROR          
+[WARN] Max heap size                 1024 MB                       WARNING        
+[ERROR] Methods to test                                             ERROR          
+[ERROR] Environment check status: ERROR

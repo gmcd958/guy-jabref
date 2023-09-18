@@ -336,7 +336,7 @@ public class JabRefPreferences implements PreferencesService {
     // AutcompleteFields - public because needed for pref migration
     public static final String AUTOCOMPLETER_COMPLETE_FIELDS = "autoCompleteFields";
 
-    // Id Entry Generator Preferences
+    // Id Entry org.jabref.generate.Generator Preferences
     public static final String ID_ENTRY_GENERATOR = "idEntryGenerator";
 
     // String delimiter

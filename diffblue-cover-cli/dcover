@@ -1,0 +1,142 @@
+#!/usr/bin/env bash
+
+# Copyright 2018-2021 Diffblue Limited. All Rights Reserved.
+# Unpublished proprietary source code.
+# Use is governed by https://docs.diffblue.com/licenses/eula
+
+function getFileSize {
+  if [ -f "$1" ] ; then
+    wc -c "$1" | awk '{print $1}'
+  else
+    echo 0
+  fi
+}
+
+function echoerr {
+  echo "$@" >&2
+}
+
+set -eo pipefail
+
+cover_ui_path="$(dirname "$0")"
+
+current_version="2023.08.01"
+
+maven_jar_path="${cover_ui_path}/cover-cli-${current_version}-jar-with-dependencies.jar"
+install_jar_path="${cover_ui_path}/cover-cli.jar"
+
+maven_dcover_agent_jar_path="${cover_ui_path}/launcher-${current_version}-shared-jar.jar"
+install_dcover_agent_jar_path="${cover_ui_path}/launcher-shared-jar.jar"
+
+maven_spring_isolation_jar_path="${cover_ui_path}/cover-isolation-layer-${current_version}.jar"
+install_dcover_spring_isolation_jar_path="${cover_ui_path}/cover-isolation-layer.jar"
+
+maven_service_jar_path="${cover_ui_path}/cover-service-analyzer-${current_version}-jar-with-dependencies.jar"
+install_service_jar_path="${cover_ui_path}/cover-service-analyzer.jar"
+
+if [ -f "$maven_jar_path" ] ; then
+  cli_jar="$maven_jar_path"
+elif [ -f "$install_jar_path" ] ; then
+  cli_jar="$install_jar_path"
+else
+  echoerr "Could not find cover-cli jar in either location:"
+  echoerr "$maven_jar_path"
+  echoerr "$install_jar_path"
+  exit 1
+fi
+
+if [ -f "$maven_dcover_agent_jar_path" ] ; then
+  agent_jar="$maven_dcover_agent_jar_path"
+elif [ -f "$install_dcover_agent_jar_path" ] ; then
+  agent_jar="$install_dcover_agent_jar_path"
+else
+  echoerr "Could not find launcher jar in either location:"
+  echoerr "$maven_dcover_agent_jar_path"
+  echoerr "$install_dcover_agent_jar_path"
+  exit 1
+fi
+
+if [ -f "$maven_spring_isolation_jar_path" ] ; then
+  spring_jar="$maven_spring_isolation_jar_path"
+elif [ -f "$install_dcover_spring_isolation_jar_path" ] ; then
+  spring_jar="$install_dcover_spring_isolation_jar_path"
+else
+  echoerr "Could not find spring isolation layer jar in either location:"
+  echoerr "$maven_spring_isolation_jar_path"
+  echoerr "$install_dcover_spring_isolation_jar_path"
+  exit 1
+fi
+
+if [ -f "$maven_service_jar_path" ] ; then
+  service_jar="$maven_service_jar_path"
+elif [ -f "$install_service_jar_path" ] ; then
+  service_jar="$install_service_jar_path"
+else
+  echoerr "Could not find service jar in either location:"
+  echoerr "$maven_service_jar_path"
+  echoerr "$install_service_jar_path"
+  exit 1
+fi
+
+log_directory="${TMPDIR:-/tmp}/diffblue/log"
+mkdir -p "${log_directory}"
+log_directory="$(cd "${log_directory}";pwd)"  # Normalize log directory in case it has extra / or .. or something
+stderr_file="${log_directory}/dcover.jvm-$(date "+%Y%m%dT%H%M%S").log"
+
+# OS specific support. $var _must_ be set to either true or false.
+cygwin=false;
+mingw=false;
+case "`uname`" in
+  CYGWIN*) cygwin=true;;
+  MINGW*) mingw=true;;
+esac
+
+# For Cygwin, ensure paths are in Unix format before anything is touched
+if $cygwin ; then
+  [ -n "$MAVEN_HOME" ] &&
+    MAVEN_HOME=`cygpath --unix "$MAVEN_HOME"`
+  [ -n "$JAVA_HOME" ] &&
+    JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
+  [ -n "$CLASSPATH" ] &&
+    CLASSPATH=`cygpath --path --unix "$CLASSPATH"`
+fi
+
+# For MinGW, ensure paths are in Unix format before anything is touched
+if $mingw ; then
+  [ -n "$MAVEN_HOME" ] &&
+    MAVEN_HOME=`(cd "$MAVEN_HOME"; pwd)`
+  [ -n "$JAVA_HOME" ] &&
+    JAVA_HOME=`(cd "$JAVA_HOME"; pwd)`
+  # TODO classpath?
+fi
+
+if [ -z "$JAVA_HOME" ] ; then
+  JAVACMD=`which java` || true
+else
+  JAVACMD="$JAVA_HOME/bin/java"
+fi
+
+if [ ! -x "$JAVACMD" ] ; then
+  echo "Could not find java command to execute." >&2
+  exit 1
+fi
+
+# For Cygwin, switch paths to Windows format before running java
+if $cygwin ; then
+  [ -n "$JAVA_HOME" ] &&
+    JAVA_HOME=`cygpath --path --windows "$JAVA_HOME"`
+fi
+
+# allowAttachSelf is required by Mockito on old JDKs (e.g. IBM J9)
+"$JAVACMD" $JVM_ARGS -ea -Xshare:off -javaagent:"$agent_jar" -Djdk.attach.allowAttachSelf=true -Dcom.diffblue.launcherJar="$agent_jar" -Dcover.jar.path="$cli_jar" -Dcom.diffblue.springIsolationJar="$spring_jar" -Dcom.diffblue.assertionSuggestionJar="$service_jar" -jar "$agent_jar" "$@" 2>>"${stderr_file}" && exit_status=$? || exit_status=$?
+
+# Check for output to standard error
+stderrFileSize=$(getFileSize "${stderr_file}")
+if [ "${stderrFileSize}" -ne "0" ]; then
+  echoerr "JVM log written to: ${stderr_file}"
+else
+  # Remove empty stderr file
+  rm -f "${stderr_file}"
+fi
+
+exit ${exit_status}

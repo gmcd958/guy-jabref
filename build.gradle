@@ -44,8 +44,8 @@ group = "org.jabref"
 version = project.findProperty('projVersion') ?: '100.0.0'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_19
-    targetCompatibility = JavaVersion.VERSION_19
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
     // Workaround needed for Eclipse, probably because of https://github.com/gradle/gradle/issues/16922
     // Should be removed as soon as Gradle 7.0.1 is released ( https://github.com/gradle/gradle/issues/16922#issuecomment-828217060 )
     modularity.inferModulePath.set(false)
@@ -223,7 +223,7 @@ dependencies {
     implementation group: 'org.jooq', name: 'jool', version: '0.9.15'
 
     testImplementation 'io.github.classgraph:classgraph:4.8.161'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
     testImplementation 'org.junit.platform:junit-platform-launcher:1.9.3'
 
     testImplementation 'org.mockito:mockito-core:5.4.0'
@@ -337,6 +337,7 @@ tasks.withType(JavaCompile) {
 
 compileJava {
     options.compilerArgs << "-Xlint:none"
+
     dependsOn "generateSource"
 
     options.generatedSourceOutputDirectory.set(file("src-gen/main/java"))
@@ -526,6 +527,10 @@ checkstyle {
     sourceSets = []
 }
 
+tasks.withType(Checkstyle) {
+    exclude '**/*DiffblueTest**'
+}
+
 rewrite {
     activeRecipe(
         'org.jabref.config.rewrite.cleanup'
@@ -533,6 +538,7 @@ rewrite {
     exclusion (
         "build.gradle",
         "buildSrc/build.gradle",
+        "testcase-generation/build.gradle",
         "eclipse.gradle",
         "settings.gradle",
         "src-gen/**",

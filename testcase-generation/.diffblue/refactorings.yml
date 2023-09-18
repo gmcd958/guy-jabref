@@ -1,0 +1,7 @@
+name: com.diffblue.cover.refactoring.Recipe
+recipeList:
+- org.openrewrite.gradle.AddDependency: {groupId: org.junit.jupiter, artifactId: junit-jupiter-engine,
+    version: 5.9.2, onlyIfUsing: '*..*', configuration: testImplementation}
+- org.openrewrite.gradle.AddDependency: {groupId: org.mockito, artifactId: mockito-core,
+    version: 5.4.0, onlyIfUsing: '*..*', configuration: testImplementation}
+type: specs.openrewrite.org/v1beta/recipe
