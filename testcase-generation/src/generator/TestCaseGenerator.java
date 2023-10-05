@@ -119,7 +119,7 @@ public class TestCaseGenerator {
     private static void activateDiffblue() {
         ProcessBuilder processBuilder = new ProcessBuilder();
 
-        processBuilder.command("C:\\Users\\guy.mcdonald\\Documents\\Diffblue Integration\\guy-jabref\\diffblue-cover-cli\\dcover.bat", "activate", "H35R-LD2Z-VLAJ-YWCO");
+        processBuilder.command("C:\\Users\\guy.mcdonald\\Documents\\teamscale-diffblue\\guy-jabref\\diffblue-cover-cli\\dcover.bat", "activate", "H35R-LD2Z-VLAJ-YWCO");
 
         try {
             Process process = processBuilder.start();
@@ -131,53 +131,75 @@ public class TestCaseGenerator {
         }
     }
 
-    private static void sendTeamscaleDataToDiffblue(List<String> references)
-    {
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        // set java to 17
-        processBuilder.command("C:\\Users\\guy.mcdonald\\Documents\\Diffblue Integration\\guy-jabref\\diffblue-cover-cli\\java17.bat");
+    private static void sendTeamscaleDataToDiffblue(List<String> references) {
+        List<String> commandList = new ArrayList<>();
+        commandList.add("cmd.exe");
+        commandList.add("/c");
+        commandList.add("start");
+        commandList.add("dcover.bat");
+        commandList.add("create");
 
-        try {
-            Process process = processBuilder.start();
-
-            // Wait for the process to exit
-            process.waitFor();
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // run targeted diffblue generation
-        for (int i = 0; i < 2 && i < references.size(); i++) {
+        for (int i = 50; i < 60 && i < references.size(); i++) {
             System.out.println(references.get(i));
 
-            processBuilder.command("C:\\Users\\guy.mcdonald\\Documents\\Diffblue Integration\\guy-jabref\\diffblue-cover-cli\\dcover.bat", "create", references.get(i), "--working-directory=\"C:\\Users\\guy.mcdonald\\Documents\\Diffblue Integration\\guy-jabref\"", "--test-output-dir=build/classes/java/test/org/jabref/diffblue", "--skip-test-validation");
-
-            try {
-                Process process = processBuilder.start();
-
-                // Capture the output stream of the process
-                InputStream is = process.getInputStream();
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
-
-                String line;
-                // Read and print the output line-by-line
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
-
-                // Wait for the process to exit
-                process.waitFor();
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
+            commandList.add(references.get(i));
         }
 
+        commandList.add("--working-directory=\"C:\\Users\\guy.mcdonald\\Documents\\teamscale-diffblue\\guy-jabref\"");
+        commandList.add("--test-output-dir=build/classes/java/test/org/jabref/diffblue");
+        commandList.add("--skip-test-validation");
+        // run targeted diffblue generation
+
+        try {
+            String[] commands = commandList.toArray(new String[0]);
+            File workingDir = new File("C:\\Users\\guy.mcdonald\\Documents\\teamscale-diffblue\\guy-jabref\\diffblue-cover-cli");
+            Process process = Runtime.getRuntime().exec(commands, null, workingDir);
+
+            int exitCode = process.waitFor();
+            System.out.println("Process exited with code " + exitCode);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
+        //        ProcessBuilder processBuilder = new ProcessBuilder();
+//        // set java to 17
+//        processBuilder.command("C:\\Users\\guy.mcdonald\\Documents\\teamscale-diffblue\\guy-jabref\\diffblue-cover-cli\\java17.bat");
+//
+//        try {
+//            Process process = processBuilder.start();
+//
+//            // Wait for the process to exit
+//            process.waitFor();
+//        } catch (IOException | InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+//            try {
+//                processBuilder.command("C:\\Users\\guy.mcdonald\\Documents\\teamscale-diffblue\\guy-jabref\\diffblue-cover-cli\\dcover.bat", "create", references.get(i), "--working-directory=\"C:\\Users\\guy.mcdonald\\Documents\\teamscale-diffblue\\guy-jabref\"", "--test-output-dir=build/classes/java/test/org/jabref/diffblue", "--skip-test-validation");
+//
+//                Process process = processBuilder.start();
+//
+//                // Capture the output stream of the process
+//                InputStream is = process.getInputStream();
+//                InputStreamReader isr = new InputStreamReader(is);
+//                BufferedReader br = new BufferedReader(isr);
+//
+//                String line;
+//                // Read and print the output line-by-line
+//                while ((line = br.readLine()) != null) {
+//                    System.out.println(line);
+//                }
+//
+//                // Wait for the process to exit
+//                process.waitFor();
+//            } catch (IOException | InterruptedException e) {
+//                e.printStackTrace();
+//            }
 
     private static void cleanTestcases() {
         try {
-            FileUtils.deleteDirectory(new File("C:\\Users\\guy.mcdonald\\Documents\\Diffblue Integration\\guy-jabref\\build\\classes\\java\\test\\org\\jabref\\diffblue\\org"));
+            FileUtils.deleteDirectory(new File("C:\\Users\\guy.mcdonald\\Documents\\teamscale-diffblue\\guy-jabref\\build\\classes\\java\\test\\org\\jabref\\diffblue\\org"));
         } catch (IOException e) {
             e.printStackTrace();
         }
