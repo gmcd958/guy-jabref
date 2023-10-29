@@ -1,6 +1,7 @@
 # Terminal Commands
 
 ./gradlew clean tiaTests --tests org.jabref.gui.autocompleter.BibEntrySuggestionProviderTest teamscaleReportUpload --continue
+./gradlew clean tiaTests --tests org.jabref.logic.layout.TextBasedPreviewLayoutDiffblueTest teamscaleReportUpload --continue
 
 dcover.bat create org.jabref.logic.citationstyle.CitationStyleGenerator --working-directory="C:\Users\guy.mcdonald\Documents\teamscale-diffblue\guy-jabref" --classpath="C:\Users\guy.mcdonald\Documents\teamscale-diffblue\guy-jabref\build\classes" --test-output-dir=build/classes/java/test/org/jabref/diffblue
 

@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'org.apache.commons:commons-csv:1.9.0'
+    implementation 'junit:junit:4.13.1'
 }
 
 tasks.register('generateTestcases', JavaExec) {
@@ -41,6 +42,15 @@ tasks.register('generateTestcases', JavaExec) {
     args = ['generate']
 }
 
+tasks.register('runTestcases', JavaExec) {
+    group = 'test generator'
+
+    mainClass = 'generator.TestCaseGenerator'
+    classpath = sourceSets.main.runtimeClasspath
+
+    args = ['run']
+}
+
 tasks.register('cleanTestcases', JavaExec) {
     group = 'test generator'
 
@@ -50,4 +60,4 @@ tasks.register('cleanTestcases', JavaExec) {
     args = ['clean']
 }
 
-tasks.getByName("jar").setProperty("duplicatesStrategy", DuplicatesStrategy.EXCLUDE);
+//tasks.getByName("jar").setProperty("duplicatesStrategy", DuplicatesStrategy.EXCLUDE);

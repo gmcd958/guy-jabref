@@ -1,0 +1,6 @@
+https://ttcglobal.teamscale.io/
+api/projects/guy-jabref/
+test-gaps/
+metrics
+Authorization
+Basic Z3V5d21jZDpuWFRuRUd4UVQyZ2ZuTnc4N0FvRjdlczM2Y2J0NENzeA==
