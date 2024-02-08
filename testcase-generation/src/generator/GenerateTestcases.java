@@ -34,7 +34,8 @@ public class GenerateTestcases {
         byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
         String authHeader = "Basic " + new String(encodedAuth);
 
-        String url = "https://ttcglobal.teamscale.io/api/projects/guy-jabref/test-gaps.csv";
+        // String url = "https://ttcglobal.teamscale.io/api/projects/guy-jabref/test-gaps.csv";
+        String url = "https://ttcglobal.teamscale.io/api/projects/guy-jabref/test-gaps.csv?all-partitions=true&uniform-path=src%2Fmain%2Fjava%2Forg%2Fjabref%2Flogic%2Fjournals&auto-select-branch=true";
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(url);
@@ -135,11 +136,15 @@ public class GenerateTestcases {
 
         System.out.println(references.size());
 
-        for (int i = 6000; i < 6010 && i < references.size(); i++) {
+        for (int i = 0; i < 20 && i < references.size(); i++) {
             System.out.println(references.get(i));
-            targetedTestMethods.add(references.get(i));
             commandList.add(references.get(i));
         }
+
+//        for (String reference : references) {
+//            System.out.println(reference);
+//            commandList.add(reference);
+//        }
 
         commandList.add("--working-directory=\"C:\\Users\\guy.mcdonald\\Documents\\teamscale-diffblue\\guy-jabref\"");
         // commandList.add("--test-output-dir=src/test/java/org/jabref/diffblue");

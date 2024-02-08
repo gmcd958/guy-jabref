@@ -4,35 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class RunTestcases {
 
     public static void runTestcases() {
-        List<String> testClassNames = getTestClassNames();
-
-        runTestsAndUpload(testClassNames);
+        runTestsAndUpload();
     }
 
-    private static List<String> getTestClassNames() {
-        List<String> testClasses = new ArrayList<>();
-
-        String fileName = "targetedTests"; // the name of the file to read
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(fileName)); // read all lines into a list
-            String[] array = lines.toArray(new String[0]); // convert the list to an array
-            for (String line : array) { // loop through the array and print each line
-                testClasses.add(line + "DiffblueTest");
-            }
-        } catch (IOException e) { // handle any exceptions
-            e.printStackTrace();
-        }
-
-        return testClasses;
-    }
-
-    private static void runTestsAndUpload(List<String> testClassNames) {
+    private static void runTestsAndUpload() {
         List<String> commandList = new ArrayList<>();
 
         commandList.add("cmd.exe");
@@ -40,17 +19,10 @@ public class RunTestcases {
         commandList.add("start");
         commandList.add("gradlew");
         commandList.add("clean");
-        commandList.add("tiaTests");
-        commandList.add("--tests");
+        commandList.add(":tiaTests");
 
-        System.out.println(testClassNames.size());
-
-        for (String testClass : testClassNames) {
-            System.out.println(testClass);
-            commandList.add(testClass);
-        }
-
-        commandList.add("teamscaleReportUpload");
+        commandList.add("--tests=org.jabref.*DiffblueTest");
+        commandList.add(":teamscaleReportUpload");
         commandList.add("--continue");
 
         // run targeted diffblue tests

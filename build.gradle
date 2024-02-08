@@ -505,10 +505,9 @@ teamscale {
 
     report {
         testwiseCoverage {
-            partition = 'Testwise Coverage'
+            partition = 'Diffblue Coverage'
         }
     }
-
 }
 
 tasks.register('tiaTests', com.teamscale.TestImpacted) {
