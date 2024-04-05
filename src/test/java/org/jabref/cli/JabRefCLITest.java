@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/*
+ * JBR-5
+ */
 class JabRefCLITest {
 
     private final String bibtex = "@article{test, title=\"test title\"}";
