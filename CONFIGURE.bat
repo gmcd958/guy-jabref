@@ -17,7 +17,7 @@
 :: Define the port of the Testwise Coverage Server here. In case the system under test consists of multiple Java
 :: processes, each Java process must have it's own port.
 
-:: TODO Define multiple port variables here and use them below to specify the agents and their ports in 
+:: TODO Define multiple port variables here and use them below to specify the agents and their ports in
 :: TEAMSCALE_AGENT_URL, if the system consists of multiple processes
 :: Also use them in the appropriate RUNME.bat files when starting the individual subcomponents of your application.
 
@@ -45,11 +45,11 @@ SETX TEAMSCALE_AGENT_URL 127.0.0.1:%TEAMSCALE_AGENT_PORT%
 
 :: Must point to the root directory of the expanded Teamscale JaCoCo Agent distribution.
 
-SETX TEAMSCALE_JACOCO_AGENT "C:\Demos\guy-jabref\teamscale-jacoco-agent"
+SETX TEAMSCALE_JACOCO_AGENT "C:\Users\guy.mcdonald\Documents\jabref-demo\teamscale-jacoco-agent"
 
 :: A comma-separated list of class, jar or war files that represent the system under test.
 
-SETX TEAMSCALE_CLASS_FILES "C:\Demos\guy-jabref\build\classes"
+SETX TEAMSCALE_CLASS_FILES "C:\Users\guy.mcdonald\Documents\jabref-demo\build\classes"
 
 :: optional: The folder into which test details, test execution and log files are written. Default is `%temp%` if not
 :: specified.
@@ -57,9 +57,9 @@ SETX TEAMSCALE_CLASS_FILES "C:\Demos\guy-jabref\build\classes"
 :: TODO Adjust to point to a directory where Teamscale Tosca Plugin and the Teamsale JaCoCo Agent can store temporary
 :: data
 
-SETX TEAMSCALE_TEST_OUTPUT "C:\Demos\guy-jabref\teamscale-jacoco-agent\tempo"
+SETX TEAMSCALE_TEST_OUTPUT "C:\Users\guy.mcdonald\Documents\jabref-demo\teamscale-jacoco-agent\tempo"
 
-:: A path to the script that should be executed after all tests have been executed, to generate 
+:: A path to the script that should be executed after all tests have been executed, to generate
 :: the testwise coverage report and upload it to Teamscale.
 
 SETX TEAMSCALE_POST_TEST_SCRIPT "%~dp0generateAndUploadReport.bat"

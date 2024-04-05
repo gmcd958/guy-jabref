@@ -23,7 +23,10 @@ public class DatabaseMerger {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseMerger.class);
     private final char keywordDelimiter;
-
+    
+    /*
+     * JBR-1
+     */
     public DatabaseMerger(char keywordDelimiter) {
         this.keywordDelimiter = keywordDelimiter;
     }
@@ -40,6 +43,9 @@ public class DatabaseMerger {
         mergeStrings(target, other);
     }
 
+    /*
+     * JBR-1
+     */
     /**
      * Merges all entries, strings, and metaData of the other database context into the target database context. Any duplicates are ignored.
      * In case a string has a different content, it is added with a new unique name.
@@ -53,6 +59,9 @@ public class DatabaseMerger {
         mergeMetaData(target.getMetaData(), other.getMetaData(), otherFileName, other.getEntries());
     }
 
+    /*
+     * JBR-1
+     */
     private void mergeEntries(BibDatabase target, BibDatabase other) {
         DuplicateCheck duplicateCheck = new DuplicateCheck(new BibEntryTypesManager());
         List<BibEntry> newEntries = other.getEntries().stream()
@@ -62,6 +71,9 @@ public class DatabaseMerger {
         target.insertEntries(newEntries);
     }
 
+    /*
+     * JBR-1
+     */
     public void mergeStrings(BibDatabase target, BibDatabase other) {
         for (BibtexString bibtexString : other.getStringValues()) {
             String bibtexStringName = bibtexString.getName();
@@ -88,6 +100,9 @@ public class DatabaseMerger {
         }
     }
 
+    /*
+     * JBR-1
+     */
     /**
      * @param target        the metaData that is  the merge target
      * @param other         the metaData to merge into the target
@@ -101,7 +116,9 @@ public class DatabaseMerger {
         mergeGroups(target, other, otherFilename, allOtherEntries);
         mergeContentSelectors(target, other);
     }
-
+    /*
+     * JBR-1
+     */
     private void mergeGroups(MetaData target, MetaData other, String otherFilename, List<BibEntry> allOtherEntries) {
         // Adds the specified node as a child of the current root. The group contained in <b>newGroups</b> must not be of
         // type AllEntriesGroup, since every tree has exactly one AllEntriesGroup (its root). The <b>newGroups</b> are
@@ -131,7 +148,9 @@ public class DatabaseMerger {
                     () -> target.setGroups(newGroups));
         });
     }
-
+/*
+ * JBR-1
+ */
     private void mergeContentSelectors(MetaData target, MetaData other) {
         for (ContentSelector selector : other.getContentSelectorList()) {
             target.addContentSelector(selector);
