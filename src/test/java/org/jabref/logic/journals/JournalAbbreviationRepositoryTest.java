@@ -35,11 +35,17 @@ class JournalAbbreviationRepositoryTest {
         undoableUnabbreviator = new UndoableUnabbreviator(repository);
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void empty() {
         assertTrue(repository.getCustomAbbreviations().isEmpty());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void oneElement() {
         repository.addCustomAbbreviation(new Abbreviation("Long Name", "L. N."));
@@ -65,6 +71,9 @@ class JournalAbbreviationRepositoryTest {
         assertFalse(repository.isKnownName("?"));
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void oneElementWithShortestUniqueAbbreviation() {
         repository.addCustomAbbreviation(new Abbreviation("Long Name", "L. N.", "LN"));
@@ -92,6 +101,9 @@ class JournalAbbreviationRepositoryTest {
         assertFalse(repository.isKnownName("?"));
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testDuplicates() {
         repository.addCustomAbbreviation(new Abbreviation("Long Name", "L. N."));
@@ -99,6 +111,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(1, repository.getCustomAbbreviations().size());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testDuplicatesWithShortestUniqueAbbreviation() {
         repository.addCustomAbbreviation(new Abbreviation("Long Name", "L. N.", "LN"));
@@ -106,6 +121,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(1, repository.getCustomAbbreviations().size());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testDuplicatesIsoOnly() {
         repository.addCustomAbbreviation(new Abbreviation("Old Long Name", "L. N."));
@@ -113,6 +131,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(2, repository.getCustomAbbreviations().size());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testDuplicatesIsoOnlyWithShortestUniqueAbbreviation() {
         repository.addCustomAbbreviation(new Abbreviation("Old Long Name", "L. N.", "LN"));
@@ -120,6 +141,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(2, repository.getCustomAbbreviations().size());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testDuplicateKeys() {
         Abbreviation abbreviationOne = new Abbreviation("Long Name", "L. N.");
@@ -136,6 +160,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals("L. N.", repository.getDefaultAbbreviation("Long Name").orElse("WRONG"));
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testDuplicateKeysWithShortestUniqueAbbreviation() {
         Abbreviation abbreviationOne = new Abbreviation("Long Name", "L. N.", "LN");
@@ -154,16 +181,25 @@ class JournalAbbreviationRepositoryTest {
         assertEquals("LN", repository.getShortestUniqueAbbreviation("Long Name").orElse("WRONG"));
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void getFromFullName() {
         assertEquals(new Abbreviation("American Journal of Public Health", "Am. J. Public Health"), repository.get("American Journal of Public Health").get());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void getFromAbbreviatedName() {
         assertEquals(new Abbreviation("American Journal of Public Health", "Am. J. Public Health"), repository.get("Am. J. Public Health").get());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testAbbreviationsWithEscapedAmpersand() {
         assertEquals(new Abbreviation("ACS Applied Materials & Interfaces", "ACS Appl. Mater. Interfaces"), repository.get("ACS Applied Materials & Interfaces").get());
@@ -176,6 +212,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(new Abbreviation("Long & Name", "L. N.", "LN"), repository.get("Long \\& Name").get());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testJournalAbbreviationWithEscapedAmpersand() {
         UndoableAbbreviator undoableAbbreviator = new UndoableAbbreviator(repository, AbbreviationType.DEFAULT, false);
@@ -189,6 +228,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(expectedAbbreviatedJournalEntry, entryWithEscapedAmpersandInJournal);
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testJournalUnabbreviate() {
         BibEntry abbreviatedJournalEntry = new BibEntry(StandardEntryType.Article);
@@ -200,6 +242,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(expectedAbbreviatedJournalEntry, abbreviatedJournalEntry);
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testJournalAbbreviateWithoutEscapedAmpersand() {
         UndoableAbbreviator undoableAbbreviator = new UndoableAbbreviator(repository, AbbreviationType.DEFAULT, false);
@@ -213,6 +258,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(expectedAbbreviatedJournalEntry, entryWithoutEscapedAmpersandInJournal);
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testJournalAbbreviateWithEmptyFJournal() {
         UndoableAbbreviator undoableAbbreviator = new UndoableAbbreviator(repository, AbbreviationType.DEFAULT, true);
@@ -228,6 +276,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(expectedAbbreviatedJournalEntry, entryWithoutEscapedAmpersandInJournal);
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testUnabbreviateWithJournalExistsAndFJournalNot() {
         BibEntry abbreviatedJournalEntry = new BibEntry(StandardEntryType.Article)
@@ -239,6 +290,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(expectedAbbreviatedJournalEntry, abbreviatedJournalEntry);
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testUnabbreviateWithJournalExistsAndFJournalExists() {
         BibEntry abbreviatedJournalEntry = new BibEntry(StandardEntryType.Article)
@@ -251,6 +305,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(expectedAbbreviatedJournalEntry, abbreviatedJournalEntry);
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testJournalDotlessAbbreviation() {
         BibEntry abbreviatedJournalEntry = new BibEntry(StandardEntryType.Article)
@@ -262,6 +319,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(expectedAbbreviatedJournalEntry, abbreviatedJournalEntry);
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testJournalDotlessAbbreviationWithCurlyBraces() {
         BibEntry abbreviatedJournalEntry = new BibEntry(StandardEntryType.Article)
@@ -273,6 +333,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(expectedAbbreviatedJournalEntry, abbreviatedJournalEntry);
     }
 
+    /*
+     * JBR-2
+     */
     /**
      * Tests <a href="https://github.com/JabRef/jabref/issues/9475">Issue 9475</a>
      */
@@ -288,6 +351,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(expectedAbbreviatedJournalEntry, abbreviatedJournalEntry);
     }
 
+    /*
+     * JBR-2
+     */
     /**
      * Tests <a href="https://github.com/JabRef/jabref/issues/9503">Issue 9503</a>
      */
@@ -303,6 +369,9 @@ class JournalAbbreviationRepositoryTest {
         assertEquals(expectedAbbreviatedJournalEntry, abbreviatedJournalEntry);
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testDotlessForPhysRevB() {
         BibEntry abbreviatedJournalEntry = new BibEntry(StandardEntryType.Article)

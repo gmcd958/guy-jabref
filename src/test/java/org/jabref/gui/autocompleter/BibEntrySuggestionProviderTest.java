@@ -25,12 +25,18 @@ class BibEntrySuggestionProviderTest {
         autoCompleter = new BibEntrySuggestionProvider(database);
     }
 
+    /*
+     * JBR-4
+     */
     @Test
     void completeWithoutAddingAnythingReturnsNothing() {
         Collection<BibEntry> result = autoCompleter.provideSuggestions(getRequest("test"));
         assertEquals(Collections.emptyList(), result);
     }
 
+    /*
+     * JBR-4
+     */
     @Test
     void completeAfterAddingEmptyEntryReturnsNothing() {
         BibEntry entry = new BibEntry();
@@ -40,6 +46,9 @@ class BibEntrySuggestionProviderTest {
         assertEquals(Collections.emptyList(), result);
     }
 
+    /*
+     * JBR-4
+     */
     @Test
     void completeKeyReturnsKey() {
         BibEntry entry = new BibEntry();
@@ -51,6 +60,9 @@ class BibEntrySuggestionProviderTest {
         assertEquals(Collections.singletonList(entry), result);
     }
 
+    /*
+     * JBR-4
+     */
     @Test
     void completeBeginningOfKeyReturnsKey() {
         BibEntry entry = new BibEntry();
@@ -61,6 +73,9 @@ class BibEntrySuggestionProviderTest {
         assertEquals(Collections.singletonList(entry), result);
     }
 
+    /*
+     * JBR-4
+     */
     @Test
     void completeLowercaseKeyReturnsKey() {
         BibEntry entry = new BibEntry();
@@ -71,6 +86,9 @@ class BibEntrySuggestionProviderTest {
         assertEquals(Collections.singletonList(entry), result);
     }
 
+    /*
+     * JBR-4
+     */
     @Test
     void completeNullThrowsException() {
         BibEntry entry = new BibEntry();
@@ -80,6 +98,9 @@ class BibEntrySuggestionProviderTest {
         assertThrows(NullPointerException.class, () -> autoCompleter.provideSuggestions(getRequest(null)));
     }
 
+    /*
+     * JBR-4
+     */
     @Test
     void completeEmptyStringReturnsNothing() {
         BibEntry entry = new BibEntry();
@@ -90,6 +111,9 @@ class BibEntrySuggestionProviderTest {
         assertEquals(Collections.emptyList(), result);
     }
 
+    /*
+     * JBR-4
+     */
     @Test
     void completeReturnsMultipleResults() {
         BibEntry entryOne = new BibEntry();
@@ -103,6 +127,9 @@ class BibEntrySuggestionProviderTest {
         assertEquals(Arrays.asList(entryTwo, entryOne), result);
     }
 
+    /*
+     * JBR-4
+     */
     @Test
     void completeShortKeyReturnsKey() {
         BibEntry entry = new BibEntry();

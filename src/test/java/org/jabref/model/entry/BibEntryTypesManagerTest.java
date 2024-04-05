@@ -61,6 +61,9 @@ class BibEntryTypesManagerTest {
         assertTrue(entryTypesManager.isCustomOrModifiedType(overwrittenStandardType, mode));
     }
 
+    /*
+     * JBR-3
+     */
     @Test
     void allTypesBibtexAreCorrect() {
         TreeSet<BibEntryType> defaultTypes = new TreeSet<>(BibtexEntryTypeDefinitions.ALL);
@@ -69,6 +72,9 @@ class BibEntryTypesManagerTest {
         assertEquals(defaultTypes, entryTypesManager.getAllTypes(BibDatabaseMode.BIBTEX));
     }
 
+    /*
+     * JBR-3
+     */
     @Test
     void allTypesBiblatexAreCorrect() {
         TreeSet<BibEntryType> defaultTypes = new TreeSet<>(BiblatexEntryTypeDefinitions.ALL);
@@ -99,6 +105,9 @@ class BibEntryTypesManagerTest {
         assertEquals(Collections.singletonList(newCustomType), entryTypesManager.getAllCustomTypes(mode));
     }
 
+    /*
+     * JBR-3
+     */
     @Test
     void registerBibEntryTypeDoesNotAffectOtherMode() {
         entryTypesManager.addCustomOrModifiedType(newCustomType, BibDatabaseMode.BIBTEX);

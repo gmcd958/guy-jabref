@@ -34,6 +34,9 @@ class DatabaseMergerTest {
         when(importFormatPreferences.bibEntryPreferences().getKeywordSeparator()).thenReturn(',');
     }
 
+    /*
+     * JBR-1
+     */
     @Test
     void mergeAddsNonDuplicateEntries() {
         // Entries 1 and 2 are identical
@@ -54,6 +57,9 @@ class DatabaseMergerTest {
         assertEquals(List.of(entry1, entry3), database.getEntries());
     }
 
+    /*
+     * JBR-1
+     */
     @Test
     void mergeAddsWithDuplicateEntries() {
         // Entries 1 and 2 are identical,  Entries 3 and 4 are identical
@@ -84,6 +90,9 @@ class DatabaseMergerTest {
         assertEquals(List.of(entry1, entry4), database.getEntries());
     }
 
+    /*
+     * JBR-1
+     */
     @Test
     void mergeBibTexStringsWithSameNameAreImportedWithModifiedName() {
         BibtexString targetString = new BibtexString("name", "content1");
@@ -116,6 +125,9 @@ class DatabaseMergerTest {
                 importedBibTeXString2.toString()), resultStringsSorted);
     }
 
+    /*
+     * JBR-1
+     */
     @Test
     void mergeBibTexStringsWithSameNameAndContentAreIgnored() {
         BibtexString targetString1 = new BibtexString("name1", "content1");
@@ -141,6 +153,9 @@ class DatabaseMergerTest {
         assertEquals(List.of(targetString1, targetString2), resultStringsSorted);
     }
 
+    /*
+     * JBR-1
+     */
     @Test
     void mergeMetaDataWithoutAllEntriesGroup() {
         MetaData target = new MetaData();
@@ -166,6 +181,9 @@ class DatabaseMergerTest {
         assertEquals(otherRootGroup, target.getGroups().get().getChildren().get(0));
     }
 
+    /*
+     * JBR-1
+     */
     @Test
     void mergeMetaDataWithAllEntriesGroup() {
         MetaData target = new MetaData();

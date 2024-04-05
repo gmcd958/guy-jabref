@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class AbbreviationTest {
 
+    /*
+     * JBR-2
+     */
     @Test
     void testAbbreviationsWithTrailingSpaces() {
         Abbreviation abbreviation = new Abbreviation("Long Name", "L. N.");
@@ -17,6 +20,9 @@ class AbbreviationTest {
         assertEquals("L. N.", abbreviation.getShortestUniqueAbbreviation());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testAbbreviationsWithTrailingSpacesWithShortestUniqueAbbreviation() {
         Abbreviation abbreviation = new Abbreviation("Long Name", "L. N.", "LN");
@@ -27,6 +33,9 @@ class AbbreviationTest {
         assertEquals("LN", abbreviation.getShortestUniqueAbbreviation());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testAbbreviationsWithSemicolons() {
         Abbreviation abbreviation = new Abbreviation("Long Name", "L. N.;LN;M");
@@ -37,6 +46,9 @@ class AbbreviationTest {
         assertEquals("L. N.;LN;M", abbreviation.getShortestUniqueAbbreviation());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testAbbreviationsWithSemicolonsWithShortestUniqueAbbreviation() {
         Abbreviation abbreviation = new Abbreviation("Long Name", "L. N.;LN;M", "LNLNM");
@@ -47,6 +59,9 @@ class AbbreviationTest {
         assertEquals("LNLNM", abbreviation.getShortestUniqueAbbreviation());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testGetNextElement() {
         Abbreviation abbreviation = new Abbreviation("Long Name", "L. N.");
@@ -56,6 +71,9 @@ class AbbreviationTest {
         assertEquals("Long Name", abbreviation.getNext("L N"));
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testGetNextElementWithShortestUniqueAbbreviation() {
         Abbreviation abbreviation = new Abbreviation("Long Name", "L. N.", "LN");
@@ -66,6 +84,9 @@ class AbbreviationTest {
         assertEquals("Long Name", abbreviation.getNext("LN"));
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testGetNextElementWithTrailingSpaces() {
         Abbreviation abbreviation = new Abbreviation("Long Name", "L. N.");
@@ -75,6 +96,9 @@ class AbbreviationTest {
         assertEquals("Long Name", abbreviation.getNext("L N"));
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testGetNextElementWithTrailingSpacesWithShortestUniqueAbbreviation() {
         Abbreviation abbreviation = new Abbreviation("Long Name", "L. N.", "LN");
@@ -85,24 +109,36 @@ class AbbreviationTest {
         assertEquals("Long Name", abbreviation.getNext("LN"));
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testDefaultAndMedlineAbbreviationsAreSame() {
         Abbreviation abbreviation = new Abbreviation("Long Name", "L N");
         assertEquals(abbreviation.getAbbreviation(), abbreviation.getDotlessAbbreviation());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testDefaultAndMedlineAbbreviationsAreSameWithShortestUniqueAbbreviation() {
         Abbreviation abbreviation = new Abbreviation("Long Name", "L N", "LN");
         assertEquals(abbreviation.getAbbreviation(), abbreviation.getDotlessAbbreviation());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testDefaultAndShortestUniqueAbbreviationsAreSame() {
         Abbreviation abbreviation = new Abbreviation("Long Name", "L N");
         assertEquals(abbreviation.getAbbreviation(), abbreviation.getShortestUniqueAbbreviation());
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void testEquals() {
       Abbreviation abbreviation = new Abbreviation("Long Name", "L N", "LN");
@@ -111,6 +147,9 @@ class AbbreviationTest {
       assertNotEquals(abbreviation, "String");
     }
 
+    /*
+     * JBR-2
+     */
     @Test
     void equalAbbrevationsWithFourComponentsAreAlsoCompareZero() {
         Abbreviation abbreviation1 = new Abbreviation("Long Name", "L. N.", "LN");

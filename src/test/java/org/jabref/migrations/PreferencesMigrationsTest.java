@@ -37,6 +37,9 @@ class PreferencesMigrationsTest {
         mainPrefsNode = mock(Preferences.class);
     }
 
+    /*
+     * JBR-6
+     */
     @Test
     void testOldStyleBibtexkeyPattern0() {
         when(prefs.get(JabRefPreferences.IMPORT_FILENAMEPATTERN)).thenReturn(oldStylePatterns[0]);
@@ -49,6 +52,9 @@ class PreferencesMigrationsTest {
         verify(mainPrefsNode).put(JabRefPreferences.IMPORT_FILENAMEPATTERN, newStylePatterns[0]);
     }
 
+    /*
+     * JBR-6
+     */
     @Test
     void testOldStyleBibtexkeyPattern1() {
         when(prefs.get(JabRefPreferences.IMPORT_FILENAMEPATTERN)).thenReturn(oldStylePatterns[1]);
@@ -61,6 +67,9 @@ class PreferencesMigrationsTest {
         verify(mainPrefsNode).put(JabRefPreferences.IMPORT_FILENAMEPATTERN, newStylePatterns[1]);
     }
 
+    /*
+     * JBR-6
+     */
     @Test
     void testArbitraryBibtexkeyPattern() {
         String arbitraryPattern = "[anyUserPrividedString]";
@@ -74,6 +83,9 @@ class PreferencesMigrationsTest {
         verify(mainPrefsNode, never()).put(JabRefPreferences.IMPORT_FILENAMEPATTERN, arbitraryPattern);
     }
 
+    /*
+     * JBR-6
+     */
     @Test
     void testPreviewStyleReviewToComment() {
         String oldPreviewStyle = "<font face=\"sans-serif\">__NEWLINE__"
@@ -109,6 +121,9 @@ class PreferencesMigrationsTest {
         verify(prefs, never()).put(JabRefPreferences.COLUMN_WIDTHS, "anyString");
     }
 
+    /*
+     * JBR-6
+     */
     @Test
     void testUpgradeColumnPreferencesFromWithoutTypes() {
         List<String> columnNames = Arrays.asList("entrytype", "author/editor", "title", "year", "journal/booktitle", "citationkey", "printed");
@@ -127,6 +142,9 @@ class PreferencesMigrationsTest {
         verify(prefs).putStringList(JabRefPreferences.COLUMN_SORT_TYPES, newSortTypes);
     }
 
+    /*
+     * JBR-6
+     */
     @Test
     void testChangeColumnPreferencesVariableNamesFor51() {
         List<String> columnNames = Arrays.asList("entrytype", "author/editor", "title", "year", "journal/booktitle", "citationkey", "printed");
@@ -151,6 +169,9 @@ class PreferencesMigrationsTest {
         verify(prefs).putStringList(JabRefPreferences.COLUMN_WIDTHS, columnWidths);
     }
 
+    /*
+     * JBR-6
+     */
     @Test
     void testChangeColumnPreferencesVariableNamesBackwardsCompatibility() {
         List<String> columnNames = Arrays.asList("entrytype", "author/editor", "title", "year", "journal/booktitle", "citationkey", "printed");
@@ -175,6 +196,9 @@ class PreferencesMigrationsTest {
         verify(prefs, never()).put("mainTableColumnSortOrder", "anyString");
     }
 
+    /*
+     * JBR-6
+     */
     @Test
     void testRestoreColumnVariablesForBackwardCompatibility() {
         List<String> updatedNames = Arrays.asList("groups", "files", "linked_id", "field:entrytype", "field:author/editor", "field:title", "field:year", "field:journal/booktitle", "field:citationkey", "special:printed");
@@ -195,6 +219,9 @@ class PreferencesMigrationsTest {
         verify(prefs).putInt(JabRefPreferences.MAIN_FONT_SIZE, 11);
     }
 
+    /*
+     * JBR-6
+     */
     @Test
     void testMoveApiKeysToKeyRing() throws Exception {
         final String V5_9_FETCHER_CUSTOM_KEY_NAMES = "fetcherCustomKeyNames";
