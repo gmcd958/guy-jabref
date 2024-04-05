@@ -23,7 +23,7 @@ public class DatabaseMerger {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseMerger.class);
     private final char keywordDelimiter;
-    
+
     /*
      * JBR-1
      */

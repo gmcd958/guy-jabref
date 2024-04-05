@@ -40,6 +40,9 @@ public class PreferencesMigrations {
     private PreferencesMigrations() {
     }
 
+    /*
+     * JBR-6
+     */
     /**
      * Perform checks and changes for users with a preference set from an older JabRef version.
      */
@@ -65,6 +68,9 @@ public class PreferencesMigrations {
         moveApiKeysToKeyring(preferences);
     }
 
+    /*
+     * JBR-6
+     */
     /**
      * Migrate all preferences from net/sf/jabref to org/jabref
      */
@@ -85,6 +91,9 @@ public class PreferencesMigrations {
         }
     }
 
+    /*
+     * JBR-6
+     */
     private static void copyPrefsRecursively(Preferences from, Preferences to) throws BackingStoreException {
         for (String key : from.keys()) {
             String newValue = from.get(key, "");
@@ -100,6 +109,9 @@ public class PreferencesMigrations {
         }
     }
 
+    /*
+     * JBR-6
+     */
     /**
      * Added from Jabref 2.11 beta 4 onwards to fix wrong encoding names
      */
@@ -137,6 +149,9 @@ public class PreferencesMigrations {
         }
     }
 
+    /*
+     * JBR-6
+     */
     /**
      * Upgrade the sort order preferences for the current version
      * The old preference is kept in case an old version of JabRef is used with
@@ -166,6 +181,9 @@ public class PreferencesMigrations {
         }
     }
 
+    /*
+     * JBR-6
+     */
     /**
      * Migrate all customized entry types from versions <=3.7
      */
@@ -183,6 +201,9 @@ public class PreferencesMigrations {
         }
     }
 
+    /*
+     * JBR-6
+     */
     /**
      * Migrate LabelPattern configuration from versions <=3.5 to new CitationKeyPatterns.
      * <p>
@@ -224,6 +245,9 @@ public class PreferencesMigrations {
         }
     }
 
+    /*
+     * JBR-6
+     */
     /**
      * Migrate Import File Name and Directory name Patterns from versions <=4.0 to new BracketedPatterns
      */
@@ -252,6 +276,9 @@ public class PreferencesMigrations {
         }
     }
 
+    /*
+     * JBR-6
+     */
     static void upgradeImportFileAndDirePatterns(JabRefPreferences prefs, Preferences mainPrefsNode) {
         // Migrate Import patterns
         // Check for prefs node for Version <= 4.0
@@ -275,6 +302,9 @@ public class PreferencesMigrations {
         // the user defined old-style patterns, and the default pattern is "".
     }
 
+    /*
+     * JBR-6
+     */
     private static void upgradeKeyBindingsToJavaFX(JabRefPreferences prefs) {
         UnaryOperator<String> replaceKeys = str -> {
             String result = str.replace("ctrl ", "ctrl+");
@@ -290,6 +320,9 @@ public class PreferencesMigrations {
         prefs.putStringList(JabRefPreferences.BINDINGS, keys);
     }
 
+    /*
+     * JBR-6
+     */
     private static void addCrossRefRelatedFieldsForAutoComplete(JabRefPreferences prefs) {
         // LinkedHashSet because we want to retain the order and add new fields to the end
         Set<String> keys = new LinkedHashSet<>(prefs.getStringList(JabRefPreferences.AUTOCOMPLETER_COMPLETE_FIELDS));
@@ -299,6 +332,9 @@ public class PreferencesMigrations {
         prefs.putStringList(JabRefPreferences.AUTOCOMPLETER_COMPLETE_FIELDS, new ArrayList<>(keys));
     }
 
+    /*
+     * JBR-6
+     */
     private static void migrateTypedKeyPrefs(JabRefPreferences prefs, Preferences oldPatternPrefs)
             throws BackingStoreException {
         LOGGER.info("Found old Bibtex Key patterns which will be migrated to new version.");
@@ -312,6 +348,9 @@ public class PreferencesMigrations {
         prefs.storeGlobalCitationKeyPattern(keyPattern);
     }
 
+    /*
+     * JBR-6
+     */
     /**
      * Customizable preview style migrations
      * <ul>
@@ -329,6 +368,9 @@ public class PreferencesMigrations {
         prefs.put(JabRefPreferences.PREVIEW_STYLE, migratedStyle);
     }
 
+    /*
+     * JBR-6
+     */
     /**
      * The former preferences default of columns was a simple list of strings ("author;title;year;..."). Since 5.0
      * the preferences store the type of the column too, so that the formerly hardwired columns like the graphic groups
@@ -399,6 +441,9 @@ public class PreferencesMigrations {
         }
     }
 
+    /*
+     * JBR-6
+     */
     static void changeColumnVariableNamesFor51(JabRefPreferences preferences) {
         // The variable names have to be hardcoded, because they have changed between 5.0 and 5.1
         final String V5_0_COLUMN_NAMES = "columnNames";
@@ -421,6 +466,9 @@ public class PreferencesMigrations {
         }
     }
 
+    /*
+     * JBR-6
+     */
     /**
      * In 5.0 the format of column names have changed. That made newer versions of JabRef preferences incompatible with
      * earlier versions of JabRef. As some complains came up, we decided to change the variable names and to clear the
@@ -464,6 +512,9 @@ public class PreferencesMigrations {
         }
     }
 
+    /*
+     * JBR-6
+     */
     /**
      * In version 6.0 the formatting of the CleanUps preferences changed. Instead of using several keys that have have a variable name a single preference key is introduced containing just the active cleanup jobs. Also instead of a combined field for the field formatters and the enabled status of all of them, they are split for easier parsing.
      * <p>
@@ -520,6 +571,9 @@ public class PreferencesMigrations {
         }
     }
 
+    /*
+     * JBR-6
+     */
     static void moveApiKeysToKeyring(JabRefPreferences preferences) {
         final String V5_9_FETCHER_CUSTOM_KEY_NAMES = "fetcherCustomKeyNames";
         final String V5_9_FETCHER_CUSTOM_KEYS = "fetcherCustomKeys";

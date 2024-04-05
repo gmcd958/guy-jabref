@@ -14,10 +14,16 @@ public class Abbreviation implements Comparable<Abbreviation>, Serializable {
     // Is the empty string if not available
     private String shortestUniqueAbbreviation;
 
+    /*
+     * JBR-2
+     */
     public Abbreviation(String name, String abbreviation) {
         this(name, abbreviation, "");
     }
 
+    /*
+     * JBR-2
+     */
     public Abbreviation(String name, String abbreviation, String shortestUniqueAbbreviation) {
         this(name,
                 abbreviation,
@@ -26,6 +32,9 @@ public class Abbreviation implements Comparable<Abbreviation>, Serializable {
                 shortestUniqueAbbreviation.trim());
     }
 
+    /*
+     * JBR-2
+     */
     private Abbreviation(String name, String abbreviation, String dotlessAbbreviation, String shortestUniqueAbbreviation) {
         this.name = name.intern();
         this.abbreviation = abbreviation.intern();
@@ -33,14 +42,23 @@ public class Abbreviation implements Comparable<Abbreviation>, Serializable {
         this.shortestUniqueAbbreviation = shortestUniqueAbbreviation.trim().intern();
     }
 
+    /*
+     * JBR-2
+     */
     public String getName() {
         return name;
     }
 
+    /*
+     * JBR-2
+     */
     public String getAbbreviation() {
         return abbreviation;
     }
 
+    /*
+     * JBR-2
+     */
     public String getShortestUniqueAbbreviation() {
         if (shortestUniqueAbbreviation.isEmpty()) {
             shortestUniqueAbbreviation = getAbbreviation();
@@ -48,14 +66,23 @@ public class Abbreviation implements Comparable<Abbreviation>, Serializable {
         return shortestUniqueAbbreviation;
     }
 
+    /*
+     * JBR-2
+     */
     public boolean isDefaultShortestUniqueAbbreviation() {
         return (shortestUniqueAbbreviation.isEmpty()) || this.shortestUniqueAbbreviation.equals(this.abbreviation);
     }
 
+    /*
+     * JBR-2
+     */
     public String getDotlessAbbreviation() {
         return this.dotlessAbbreviation;
     }
 
+    /*
+     * JBR-2
+     */
     @Override
     public int compareTo(Abbreviation toCompare) {
         int nameComparison = getName().compareTo(toCompare.getName());
@@ -71,6 +98,9 @@ public class Abbreviation implements Comparable<Abbreviation>, Serializable {
         return getShortestUniqueAbbreviation().compareTo(toCompare.getShortestUniqueAbbreviation());
     }
 
+    /*
+     * JBR-2
+     */
     public String getNext(String current) {
         String currentTrimmed = current.trim();
 
@@ -85,6 +115,9 @@ public class Abbreviation implements Comparable<Abbreviation>, Serializable {
         }
     }
 
+    /*
+     * JBR-2
+     */
     @Override
     public String toString() {
         return String.format("Abbreviation{name=%s, abbreviation=%s, dotlessAbbreviation=%s, shortestUniqueAbbreviation=%s}",
@@ -94,6 +127,9 @@ public class Abbreviation implements Comparable<Abbreviation>, Serializable {
                 this.shortestUniqueAbbreviation);
     }
 
+    /*
+     * JBR-2
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -106,6 +142,9 @@ public class Abbreviation implements Comparable<Abbreviation>, Serializable {
         return getName().equals(that.getName()) && getAbbreviation().equals(that.getAbbreviation()) && getShortestUniqueAbbreviation().equals(that.getShortestUniqueAbbreviation());
     }
 
+    /*
+     * JBR-2
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getName(), getAbbreviation(), getShortestUniqueAbbreviation());

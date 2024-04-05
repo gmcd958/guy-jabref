@@ -23,6 +23,9 @@ public class BibEntryType implements Comparable<BibEntryType> {
     private final LinkedHashSet<OrFields> requiredFields;
     private final LinkedHashSet<BibField> fields;
 
+    /*
+     * JBR-3
+     */
     /**
      * Provides an enriched EntryType with information about defined standards as mandatory fields etc.
      *
@@ -38,21 +41,33 @@ public class BibEntryType implements Comparable<BibEntryType> {
         this.requiredFields = new LinkedHashSet<>(requiredFields);
     }
 
+    /*
+     * JBR-3
+     */
     public EntryType getType() {
         return type;
     }
 
+    /*
+     * JBR-3
+     */
     public Set<BibField> getOptionalFields() {
         return getAllBibFields().stream()
                              .filter(field -> !isRequired(field.field()))
                              .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
+    /*
+     * JBR-3
+     */
     public boolean isRequired(Field field) {
         return getRequiredFields().stream()
                                   .anyMatch(fields -> fields.contains(field));
     }
 
+    /*
+     * JBR-3
+     */
     /**
      * Returns all required field names.
      * If fields have an OR relationship the name includes both field names divided by /, e.g. author/editor.
@@ -64,6 +79,9 @@ public class BibEntryType implements Comparable<BibEntryType> {
         return Collections.unmodifiableSet(requiredFields);
     }
 
+    /*
+     * JBR-3
+     */
     /**
      * Returns all defined fields.
      */
@@ -71,10 +89,16 @@ public class BibEntryType implements Comparable<BibEntryType> {
         return Collections.unmodifiableSet(fields);
     }
 
+    /*
+     * JBR-3
+     */
     public Set<Field> getAllFields() {
         return fields.stream().map(BibField::field).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
+    /*
+     * JBR-3
+     */
     public Set<Field> getPrimaryOptionalFields() {
         return getOptionalFields().stream()
                                   .filter(field -> field.priority() == FieldPriority.IMPORTANT)
@@ -82,6 +106,9 @@ public class BibEntryType implements Comparable<BibEntryType> {
                                   .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
+    /*
+     * JBR-3
+     */
     public Set<Field> getSecondaryOptionalFields() {
         return getOptionalFields().stream()
                                   .filter(field -> field.priority() == FieldPriority.DETAIL)
@@ -89,6 +116,9 @@ public class BibEntryType implements Comparable<BibEntryType> {
                                   .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
+    /*
+     * JBR-3
+     */
     public Set<Field> getDeprecatedFields(BibDatabaseMode mode) {
         if (mode == BibDatabaseMode.BIBTEX) {
             return Collections.emptySet();
@@ -106,12 +136,18 @@ public class BibEntryType implements Comparable<BibEntryType> {
         return deprecatedFields;
     }
 
+    /*
+     * JBR-3
+     */
     public Set<Field> getSecondaryOptionalNotDeprecatedFields(BibDatabaseMode mode) {
         Set<Field> optionalFieldsNotPrimaryOrDeprecated = new LinkedHashSet<>(getSecondaryOptionalFields());
         optionalFieldsNotPrimaryOrDeprecated.removeAll(getDeprecatedFields(mode));
         return optionalFieldsNotPrimaryOrDeprecated;
     }
 
+    /*
+     * JBR-3
+     */
     /**
      * Get list of all optional fields of this entry and all fields being source for a BibTeX to BibLaTeX conversion.
      */
@@ -126,6 +162,9 @@ public class BibEntryType implements Comparable<BibEntryType> {
         return optionalFieldsAndAliases;
     }
 
+    /*
+     * JBR-3
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -140,11 +179,17 @@ public class BibEntryType implements Comparable<BibEntryType> {
                Objects.equals(fields, that.fields);
     }
 
+    /*
+     * JBR-3
+     */
     @Override
     public int hashCode() {
         return Objects.hash(type, requiredFields, fields);
     }
 
+    /*
+     * JBR-3
+     */
     /**
      * Generates a **single line** string containing the information. This is used for debugging purposes.
      *
@@ -162,6 +207,9 @@ public class BibEntryType implements Comparable<BibEntryType> {
                 '}';
     }
 
+    /*
+     * JBR-3
+     */
     @Override
     public int compareTo(BibEntryType o) {
         return this.getType().getName().compareTo(o.getType().getName());

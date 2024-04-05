@@ -19,10 +19,16 @@ public class BibEntrySuggestionProvider extends SuggestionProvider<BibEntry> {
 
     private final BibDatabase database;
 
+    /*
+     * JBR-4
+     */
     public BibEntrySuggestionProvider(BibDatabase database) {
         this.database = database;
     }
 
+    /*
+     * JBR-4
+     */
     @Override
     protected Equivalence<BibEntry> getEquivalence() {
         // TODO: add proper logging
@@ -31,11 +37,17 @@ public class BibEntrySuggestionProvider extends SuggestionProvider<BibEntry> {
         return Equivalence.equals().onResultOf(BibEntry::getCitationKey);
     }
 
+    /*
+     * JBR-4
+     */
     @Override
     protected Comparator<BibEntry> getComparator() {
         return new EntryComparator(false, true, InternalField.KEY_FIELD);
     }
 
+    /*
+     * JBR-4
+     */
     @Override
     protected boolean isMatch(BibEntry entry, AutoCompletionBinding.ISuggestionRequest request) {
         String userText = request.getUserText();
@@ -44,6 +56,9 @@ public class BibEntrySuggestionProvider extends SuggestionProvider<BibEntry> {
                     .orElse(false);
     }
 
+    /*
+     * JBR-4
+     */
     @Override
     public Stream<BibEntry> getSource() {
         return database.getEntries().parallelStream();
